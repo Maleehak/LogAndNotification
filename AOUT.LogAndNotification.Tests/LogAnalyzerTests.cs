@@ -10,12 +10,19 @@ namespace AOUT.LogAndNotification.Tests
     class LogAnalyzerTests
     {
         [Test]
-         public void IsValidLogFileName_ValidName_RemembersTrue()
+        public void
+        IsValidFileName_NameShorterThan6CharsButSupportedExtension_ReturnsFalse()
         {
-            // checking state instead of function result
-            LogAnalyzer log = new LogAnalyzer();
-            log.IsValidLogFileName("somefile.slf");
-            Assert.IsTrue(log.WasLastFileNameValid);
-        }
+            StubExtensionManager myFakeManager = new StubExtensionManager();
+            myFakeManager.ShouldExtensionBeValid= true;
+
+            //create analyzer and inject stub
+            LogAnalyzer log =new LogAnalyzer(myFakeManager);
+
+            //Assert logic assuming extension is supported
+            bool result = log.IsValidLogFileName("short.ext");
+            Assert.IsFalse(result,
+            "File name with less than 5 chars should have failed the method, even if the extension is supported");
+         }
     }
 }

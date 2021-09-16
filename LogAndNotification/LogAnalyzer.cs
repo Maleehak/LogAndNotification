@@ -6,21 +6,18 @@ namespace LogAndNotification
 {
     public class LogAnalyzer
     {
-        private bool wasLastFileNameValid;
-        public bool WasLastFileNameValid
+        private IExtensionManager manager;
+        public LogAnalyzer()
         {
-            get { return wasLastFileNameValid; }
-            set { wasLastFileNameValid = value; }
+            manager = new FileExtensionManager();
+        }
+        public LogAnalyzer(IExtensionManager mgr)
+        {
+            manager = mgr;
         }
         public bool IsValidLogFileName(string fileName)
         {
-            if (!fileName.ToLower().EndsWith(".slf"))
-            {
-                wasLastFileNameValid = false;
-                return false;
-            }
-            wasLastFileNameValid = true;
-            return true;
+            return manager.IsValid(fileName);
         }
     }
 }
