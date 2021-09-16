@@ -17,7 +17,9 @@ namespace AOUT.LogAndNotification.Tests
             myFakeManager.ShouldExtensionBeValid= true;
 
             //create analyzer and inject stub
-            LogAnalyzer log =new LogAnalyzer(myFakeManager);
+            ExtensionManagerFactory.SetManager(myFakeManager);
+            LogAnalyzer log =new LogAnalyzer();
+            
 
             //Assert logic assuming extension is supported
             bool result = log.IsValidLogFileName("short.ext");

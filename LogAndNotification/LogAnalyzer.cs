@@ -9,12 +9,9 @@ namespace LogAndNotification
         private IExtensionManager manager;
         public LogAnalyzer()
         {
-            manager = new FileExtensionManager();
+            manager = ExtensionManagerFactory.Create();
         }
-        public LogAnalyzer(IExtensionManager mgr)
-        {
-            manager = mgr;
-        }
+
         public bool IsValidLogFileName(string fileName)
         {
             return manager.IsValid(fileName);
