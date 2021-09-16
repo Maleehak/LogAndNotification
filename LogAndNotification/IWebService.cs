@@ -6,6 +6,6 @@ namespace LogAndNotification
 {
     public interface IWebService
     {
-        void LogError(string message);
+        public void LogError(string message);
     }
 }
