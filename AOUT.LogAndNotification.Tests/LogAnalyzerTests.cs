@@ -12,6 +12,7 @@ namespace AOUT.LogAndNotification.Tests
         [Test]
          public void IsValidLogFileName_ValidName_RemembersTrue()
         {
+            // checking state instead of function result
             LogAnalyzer log = new LogAnalyzer();
             log.IsValidLogFileName("somefile.slf");
             Assert.IsTrue(log.WasLastFileNameValid);
