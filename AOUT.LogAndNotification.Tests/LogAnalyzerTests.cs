@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using LogAndNotification;
+using Rhino.Mocks;
 
 namespace AOUT.LogAndNotification.Tests
 {
@@ -12,11 +13,32 @@ namespace AOUT.LogAndNotification.Tests
         [Test]
         public void Analyze_TooShortFileName_CallsWebService()
         {
-            MockService mockService = new MockService();
-            LogAnalyzer log = new LogAnalyzer(mockService);
+            MockRepository mocks = new MockRepository();
+            IWebService simulatedService = mocks.DynamicMock<IWebService>();
+            using (mocks.Record())
+            {
+                simulatedService.LogError("bad string");
+            }
+            LogAnalyzer log = new LogAnalyzer(simulatedService);
             string tooShortFileName = "abc.ext";
             log.Analyze(tooShortFileName);
-            Assert.AreEqual("Filename too short:abc.ext", mockService.LastError);
+            mocks.VerifyAll();
+        }
+
+        [Test]
+        public void Analyze_TooShortFileName_CallsWebService2()
+        {
+            MockRepository mocks = new MockRepository();
+            IWebService simulatedService = mocks.StrictMock<IWebService>();
+            using (mocks.Record())
+            {
+                simulatedService.LogError("bad string");
+            }
+            LogAnalyzer log = new LogAnalyzer(simulatedService);
+            string tooShortFileName = "abc.ext";
+            log.Analyze(tooShortFileName);
+            mocks.VerifyAll();
         }
     }
+
 }
