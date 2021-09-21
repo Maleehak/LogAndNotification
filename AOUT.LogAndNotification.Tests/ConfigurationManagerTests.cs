@@ -1,23 +1,20 @@
-﻿using NUnit.Framework;
+﻿using LogAndNotification;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using LogAndNotification;
-using Moq;
 
 namespace AOUT.LogAndNotification.Tests
 {
-
     [TestFixture]
-    public class LogAnalyzerTests : BaseTestClass 
+    public class ConfigurationManagerTests : BaseTestClass
     {
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
-            LogAnalyzer la = new LogAnalyzer();
-            la.Analyze("myemptyfile.txt");
+            ConfigurationManager cm = new ConfigurationManager();
+            bool configured = cm.IsConfigured("something");
             //rest of test
         }
     }
-
 }

@@ -6,17 +6,13 @@ namespace LogAndNotification
 {
     public class LogAnalyzer
     {
-        private IWebService service;
-        public LogAnalyzer(IWebService service)
-        {
-            this.service = service;
-        }
         public void Analyze(string fileName)
         {
             if (fileName.Length < 8)
-            {
-                service.LogError("Filename too short:"+ fileName);
+                 {
+                LoggingFacility.Log("Filename too short:" + fileName);
             }
+            //rest of the method here
         }
     }
 }
