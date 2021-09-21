@@ -9,8 +9,14 @@ namespace AOUT.LogAndNotification.Tests
 {
 
     [TestFixture]
-    public class LogAnalyzerTests : BaseTestClass 
+    public class LogAnalyzerTests : BaseTestClass
     {
+        [SetUp]
+        public override void Setup()
+        {
+            base.Setup();
+        }
+
         [Test]
         public void Analyze_EmptyFile_ThrowsException()
         {
