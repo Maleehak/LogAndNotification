@@ -3,41 +3,28 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using LogAndNotification;
-using Rhino.Mocks;
+using Moq;
 
 namespace AOUT.LogAndNotification.Tests
 {
    
+    [TestFixture]
     class LogAnalyzerTests
     {
         [Test]
         public void Analyze_TooShortFileName_CallsWebService()
         {
-            MockRepository mocks = new MockRepository();
-            IWebService simulatedService = mocks.DynamicMock<IWebService>();
-            using (mocks.Record())
-            {
-                simulatedService.LogError("bad string");
-            }
-            LogAnalyzer log = new LogAnalyzer(simulatedService);
-            string tooShortFileName = "abc.ext";
-            log.Analyze(tooShortFileName);
-            mocks.VerifyAll();
-        }
+            Mock<IWebService> mockObject = new Mock<IWebService>();
+            
+            mockObject.Setup(x => x.LogError("Filename too short:abc.ext")).Verifiable();
 
-        [Test]
-        public void Analyze_TooShortFileName_CallsWebService2()
-        {
-            MockRepository mocks = new MockRepository();
-            IWebService simulatedService = mocks.StrictMock<IWebService>();
-            using (mocks.Record())
-            {
-                simulatedService.LogError("bad string");
-            }
-            LogAnalyzer log = new LogAnalyzer(simulatedService);
+           
+            LogAnalyzer log = new LogAnalyzer(mockObject.Object);
             string tooShortFileName = "abc.ext";
             log.Analyze(tooShortFileName);
-            mocks.VerifyAll();
+
+
+            mockObject.VerifyAll();
         }
     }
 
